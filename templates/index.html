@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Prediction and Chatbot System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 40px; /* Increased padding */
+            font-size: 2em; /* Increased font size for more prominence */
+            width: 80%; /* Adjust width to take up more space */
+            height: 300px; /* Set a fixed height for a bigger container */
+            border-radius: 10px; /* Optional: To make the container edges rounded */
+            box-sizing: border-box; /* Ensures padding doesn't affect the container's width/height */
+
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e7f7e7;
+            border: 1px solid #d4e9d4;
+            border-radius: 4px;
+        }
+        #chatbot {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #chatMessages {
+            height: 200px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        input[type="text"] {
+            width: 80%;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>RAPID RESCUE</h1>
+    </header>
+
+    <div class="container">
+        <h2>Disaster Prediction</h2>
+        <form id="predictionForm">
+            <label for="disasterType">Select Disaster:</label>
+            <select id="disasterType" onchange="toggleFields()">
+                <option value="earthquake">Earthquake</option>
+                <option value="hurricane">Hurricane</option>
+            </select>
+
+            <!-- Earthquake fields -->
+            <div id="earthquakeFields">
+                <label for="latitude">Latitude:</label>
+                <input type="number" id="latitude" name="latitude" required>
+                <label for="longitude">Longitude:</label>
+                <input type="number" id="longitude" name="longitude" required>
+                <label for="depth">Depth:</label>
+                <input type="number" id="depth" name="depth" required>
+            </div>
+
+            <!-- Hurricane fields -->
+            <div id="hurricaneFields" style="display:none;">
+                <label for="wind_speed">Maximum Wind (km/h):</label>
+                <input type="number" id="wind_speed" name="wind_speed">
+                <label for="pressure">Minimum Pressure (hPa):</label>
+                <input type="number" id="pressure" name="pressure">
+            </div>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        <h3 id="result"></h3>
+    </div>
+
+    <div class="container" id="chatbot">
+        <h3>Chatbot</h3>
+        <div id="chatMessages"></div>
+        <input type="text" id="userMessage" placeholder="Ask me anything..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        function toggleFields() {
+            var disasterType = document.getElementById('disasterType').value;
+            if (disasterType === 'earthquake') {
+                document.getElementById('earthquakeFields').style.display = 'block';
+                document.getElementById('hurricaneFields').style.display = 'none';
+            } else {
+                document.getElementById('earthquakeFields').style.display = 'none';
+                document.getElementById('hurricaneFields').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
